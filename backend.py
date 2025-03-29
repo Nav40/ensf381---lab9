@@ -54,7 +54,6 @@ def validate_login():
 
 @app.route('/predict_house_price', methods=['POST'])
 def predict_house_price():
-    try:
  
         model = joblib.load(model_path)
         
@@ -91,16 +90,6 @@ def predict_house_price():
         
         return jsonify({"predicted_price": float(predicted_price[0])})
     
-    except FileNotFoundError:
-        return jsonify({
-            "success": False,
-            "message": "Model file not found. Please place the model file at " + model_path
-        }), 500
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "message": f"Error making prediction: {str(e)}"
-        }), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
